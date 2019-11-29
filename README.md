@@ -205,15 +205,26 @@ We follow some rules which are not implemented in TSLint. So we implemented them
 ### `tinkoff-angular-member-ordering`
 
 We arrange members of Angular components in the following order:
-
--   public static members;
--   members decorated with `@Input()` (both fields and setters);
--   members decorated with `@Output()`;
--   other public members;
--   protected static members;
--   protected instance members;
--   private static members;
--   private members.
+- private properties
+- private static properties
+- protected static properties
+- protected properties
+- properties
+- static properties
+- members decorated with `@Input()` (both fields and setters);
+- members decorated with `@Output()`;
+- getters
+- setters
+- protected getters
+- protected setters
+- private getters
+- private setters
+- method
+- static method
+- protected method
+- protected static method
+- private method
+- private static method
 
 ### `tinkoff-condition-breaks`
 
