@@ -51,5 +51,25 @@ exports[`require-return-type snapshot 1`] = `
   90 | }
 
 
-[31m[1m5 errors found.[22m[39m"
+[31merror[39m: [1mFunction with return keyword should specify return type[22m [2m(@tinkoff/require-return-type)[22m at [32meslint/rules/tests/require-return-type.fixture.ts:105:8[39m:
+  103 | 
+  104 | class A2 {
+> 105 |     abc() { // Should fail
+      |        ^
+  106 |         return () => 123
+  107 |     }
+  108 | }
+
+
+[31merror[39m: [1mFunction with return keyword should specify return type[22m [2m(@tinkoff/require-return-type)[22m at [32meslint/rules/tests/require-return-type.fixture.ts:121:8[39m:
+  119 | 
+  120 | class B2 {
+> 121 |     abc() {  // Should fail
+      |        ^
+  122 |         return {
+  123 |             meth(): number {
+  124 |                 return
+
+
+[31m[1m7 errors found.[22m[39m"
 `;

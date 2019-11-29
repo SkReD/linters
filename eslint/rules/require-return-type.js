@@ -1,4 +1,20 @@
 const path = require('path');
+const _get = require('lodash/get');
+
+const FN_NODE_TYPES = new Set([
+    'ArrowFunctionExpression',
+    'FunctionDeclaration',
+    'MethodDefinition',
+    'FunctionExpression',
+]);
+
+function getFunctionNode(node) {
+    while (!FN_NODE_TYPES.has(node.type)) {
+        node = node.parent;
+    }
+
+    return node;
+}
 
 module.exports = {
     meta: {
@@ -21,23 +37,17 @@ module.exports = {
             return {};
         }
 
-        function getFunctionNode(node, functionNodeType) {
-            while (node.type !== functionNodeType) {
-                node = node.parent;
-            }
-
-            return node;
-        }
-
         function createReportMissingType(functionNodeType) {
             return function reportMissingType(returnNode) {
                 const {argument: returnArgument} = returnNode;
-                const fnNode = getFunctionNode(returnNode, functionNodeType);
+                const fnNode = getFunctionNode(returnNode);
 
                 if (
                     !returnArgument ||
                     returnArgument.name === 'undefined' ||
-                    returnArgument.operator === 'void'
+                    returnArgument.operator === 'void' ||
+                    fnNode.type !== functionNodeType || // Don't fail when return belongs to nested function with different types
+                    _get(fnNode, 'returnType.type') === 'TSTypeAnnotation' // Don't fail when return belongs to nested function with same types
                 ) {
                     return;
                 }

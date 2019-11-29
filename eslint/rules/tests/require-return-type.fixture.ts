@@ -91,3 +91,38 @@ function ab3() {
 
 // Edge case
 // () => ({ action: 'xxx' }) as const
+
+
+class A {
+    abc() {
+        const a = () => {
+            return 123
+        }
+    }
+}
+
+class A2 {
+    abc() { // Should fail
+        return () => 123
+    }
+}
+
+class B {
+    abc() {
+        someGlobal.a = {
+            meth(): number {
+                return 123
+            }
+        }
+    }
+}
+
+class B2 {
+    abc() {  // Should fail
+        return {
+            meth(): number {
+                return
+            }
+        }
+    }
+}
